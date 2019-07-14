@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static "myapp/css/main.css" %}">
+    <script src="{% static "myapp/js/jquery-3.4.1.js" %}"></script>
+</head>
+<body>
+
+{% comment %}
+hello world
+<script>
+    alert($)
+{% endcomment %}
+{% comment %}</script>{% endcomment %}
+<form action="">
+    a:<input  type="text" id="name" name="a"><br>
+    b:<input  type="text" id="password" name="b"><br>
+    <input type="button" value="提交" id="btn">
+    <p id="result"></p>
+</form>
+        <p id="result"></p>
+<script>
+{#    $('#btn').click(function () {#}
+{#        var a=$("#name").val()#}
+{#        var b=$("#password").val()#}
+{#        $.get("{% url 'add' %}",#}
+{#            {"a":a  , "b":b},#}
+{#        function (ret) {#}
+{#            $('#result').html(ret.ret)#}
+{#        }#}
+{#     )#}
+{##}
+{##}
+{#   })#}
+{#    $("#btn").click(function(){#}
+{#        var a=$("#name").val()#}
+{#        var b=$("#password").val()#}
+{#        $.post("{% url "add" %}",#}
+{#            {"a":a,"b":b}#}
+{#            function (ret) {#}
+{##}
+{#            })#}
+{#    })#}
+    $.ajaxSetup({
+        data:{csrfmiddlewaretoken:"{{ csrf_token }}"},
+    });
+    $("#btn").click(function(){
+        var a=$("#name").val()
+        var b=$("#password").val()
+        $.ajax({url:"{% url "add" %}",
+               type:"POST",
+               data:{"a":a,"b":b},
+               success:function(ret){
+               $("#result").html(ret.ret)
+        })
+    })
+
+</script>
+</body>
+</html>
